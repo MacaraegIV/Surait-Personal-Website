@@ -1,0 +1,13 @@
+---
+import { personal } from '../data/personal';
+import LifeChapters from './LifeChapters.astro';
+import '../styles/personal.css';
+---
+<div class="personal-content wrap">
+  <nav class="chapter-nav" aria-label="About page sections"><span>GET TO KNOW ME</span><a href="#story">My story</a><a href="#values">Values</a><a href="#goals">Goals</a><a href="#student-life">Studies</a><a href="#musubi-business">Business</a><a href="#open-road">Rides</a><a href="#quick-answers">Q&A</a></nav>
+  <section class="personal-section" id="story" aria-labelledby="story-title"><p class="eyebrow">01 / THE PERSON BEHIND THE PROFILE</p><h2 id="story-title">Student. Business owner.<br/><span class="blue">Motorcycle enthusiast.</span></h2>{personal.story.map(paragraph => <p>{paragraph}</p>)}</section>
+  <section class="personal-section" id="values" aria-labelledby="values-title"><div class="personal-heading"><div><p class="eyebrow">02 / WHAT GUIDES ME</p><h2 id="values-title">Values I keep <span class="blue">close.</span></h2></div><p>The principles I try to bring<br/>into school, business, and life.</p></div><div class="strength-grid">{personal.values.map((value, index) => <article><span class="strength-number">0{index + 1}</span><h3>{value.title}</h3><p>{value.text}</p></article>)}</div></section>
+  <section class="personal-section" id="goals" aria-labelledby="goals-title"><div class="personal-heading"><div><p class="eyebrow">03 / LOOKING AHEAD</p><h2 id="goals-title">A direction, <span class="blue">not a shortcut.</span></h2></div></div><div class="goal-card"><span class="eyebrow">THINGS I’M WORKING TOWARD</span><h3>Keep showing up for the life I want to build.</h3><ul>{personal.goals.map(goal => <li>{goal}</li>)}</ul></div></section>
+  <section class="personal-section" id="hobbies" aria-labelledby="hobbies-title"><div class="personal-heading"><div><p class="eyebrow">04 / BEYOND THE CLASSROOM</p><h2 id="hobbies-title">Business, study & <span class="blue">the open road.</span></h2></div></div><div class="strength-grid">{personal.hobbies.map((hobby, index) => <article><span class="strength-number">0{index + 1}</span><h3>{hobby.title}</h3><p>{hobby.text}</p></article>)}</div></section>
+  <LifeChapters />
+</div>

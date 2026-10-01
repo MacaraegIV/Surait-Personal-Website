@@ -1,0 +1,79 @@
+---
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const chapters = [
+  {
+    id: 'student-life', number: '05', label: 'STUDENT LIFE', title: 'Understanding people.', accent: 'Finding perspective.',
+    image: '18.jpg', alt: 'Criminology training', caption: 'A closer look at life as a criminology student.',
+    paragraphs: [
+      'Criminology brings together questions about behavior, justice, and the communities we live in. What interests me is the connection between understanding a person and understanding the bigger picture around them.',
+      'For me, being a student means staying open to questions. I want to build the habit of looking carefully, listening to different perspectives, and thinking before reaching a conclusion.',
+    ],
+    focus: ['People and behavior', 'Justice and community', 'Evidence and critical thinking'],
+  },
+  {
+    id: 'musubi-business', number: '06', label: 'MY SMALL BUSINESS', title: 'Something simple.', accent: 'Made with care.',
+    image: '19.jpg', alt: 'Musubi prepared and ready to go', caption: 'Musubi: a small business and a hands-on creative outlet.',
+    paragraphs: [
+      'My musubi business gives me a different kind of classroom. Making something people can enjoy connects creativity with practical work, and reminds me that small details matter.',
+      'Alongside my studies, this is a part of life where I can turn an idea into something real. I want to keep improving what I make and build a business people remember for the care behind it.',
+    ],
+    focus: ['Preparing with care', 'Learning through making', 'Growing step by step'],
+  },
+  {
+    id: 'open-road', number: '07', label: 'LIFE ON TWO WHEELS', title: 'Room to breathe.', accent: 'Reasons to explore.',
+    image: '34.jpg', alt: 'A rainy motorcycle ride with friends', caption: 'The roads, the company, and the memories along the way.',
+    paragraphs: [
+      'Motorcycle rides are one of my favorite ways to spend time beyond school and business. A change of scenery gives me space to clear my head and enjoy the world at a different pace.',
+      'What stays with me is more than the destination: the people along the way, an unexpected view, or a simple moment worth keeping. Those experiences are part of the story I share in my gallery.',
+    ],
+    focus: ['A change of scenery', 'Time with friends', 'Memories beyond the destination'],
+  },
+];
+const lessons = [
+  { title: 'Stay willing to learn.', text: 'There is always another perspective to consider. I want curiosity to remain part of how I approach both familiar routines and new experiences.' },
+  { title: 'Give small things attention.', text: 'Progress does not always look dramatic. A thoughtful choice, a little preparation, and consistent effort can give everyday work more meaning.' },
+  { title: 'Make space for life.', text: 'My studies and business matter to me, and so do the people and experiences outside them. I want to grow without losing sight of those connections.' },
+];
+const questions = [
+  { question: 'What is this website about?', answer: 'This is my personal space to share who I am: a criminology student, a small musubi business owner, and someone who loves motorcycle rides. It brings those parts of my everyday life together.' },
+  { question: 'What am I working toward?', answer: 'I want to grow into a capable criminology professional, keep developing my musubi business, and learn through meaningful experiences. My goals give me direction while leaving room to grow.' },
+  { question: 'What do I enjoy outside the classroom?', answer: 'Making musubi, riding my motorcycle, and enjoying time beyond my studies. My camera roll includes food, friends, outdoor days, and moments from student life.' },
+  { question: 'Where can you see more of my everyday life?', answer: 'The gallery on the home page brings together photos and videos from my camera roll. Open a photo to view it more closely, or expand the collection to explore the rest.' },
+];
+---
+
+{chapters.map(chapter => (
+  <section class="personal-section life-chapter" id={chapter.id} aria-labelledby={`${chapter.id}-title`}>
+    <div class="chapter-editorial">
+      <div class="chapter-copy">
+        <p class="eyebrow">{chapter.number} / {chapter.label}</p>
+        <h2 id={`${chapter.id}-title`}>{chapter.title}<br /><span class="blue">{chapter.accent}</span></h2>
+        {chapter.paragraphs.map(paragraph => <p>{paragraph}</p>)}
+        <ul class="chapter-focus" aria-label={`${chapter.label.toLowerCase()} interests`}>
+          {chapter.focus.map(item => <li>{item}</li>)}
+        </ul>
+      </div>
+      <figure class="chapter-image">
+        <img src={`${base}/media/${chapter.image}`} alt={chapter.alt} width="800" height="650" loading="lazy" />
+        <figcaption>{chapter.caption}</figcaption>
+      </figure>
+    </div>
+  </section>
+))}
+
+<section class="personal-section" id="life-lessons" aria-labelledby="lessons-title">
+  <div class="personal-heading"><div><p class="eyebrow">08 / NOTES TO MYSELF</p><h2 id="lessons-title">Lessons to take <span class="blue">forward.</span></h2></div><p>A few reminders for the person<br />I am still becoming.</p></div>
+  <div class="lesson-grid">{lessons.map((lesson, index) => <article><span class="strength-number">0{index + 1}</span><h3>{lesson.title}</h3><p>{lesson.text}</p></article>)}</div>
+</section>
+
+<section class="personal-section" id="quick-answers" aria-labelledby="answers-title">
+  <div class="personal-heading"><div><p class="eyebrow">09 / A LITTLE MORE ABOUT ME</p><h2 id="answers-title">A few questions.<br /><span class="blue">A clearer picture.</span></h2></div></div>
+  <div class="profile-questions">{questions.map(item => <details><summary>{item.question}<span aria-hidden="true">+</span></summary><p>{item.answer}</p></details>)}</div>
+</section>
+
+<section class="personal-section closing-note" aria-labelledby="closing-title">
+  <p class="eyebrow">THE STORY CONTINUES</p>
+  <h2 id="closing-title">Still learning.<br />Still making.<br /><span class="blue">Still moving forward.</span></h2>
+  <p>This website is a snapshot of the life I am building. There is more to learn, more to make, and more to experience along the way. Thanks for taking a little time to get to know me.</p>
+  <a class="button" href={`${base}/#gallery`}>Explore my camera roll <span aria-hidden="true">&rarr;</span></a>
+</section>

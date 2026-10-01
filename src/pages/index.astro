@@ -1,0 +1,62 @@
+---
+import '../../styles.css';
+import AmbientBackground from '../components/AmbientBackground.astro';
+import { profile } from '../data/portfolio';
+import PersonalSections from '../components/PersonalSections.astro';
+import MediaGallery from '../components/MediaGallery.astro';
+import '../styles/polish.css';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={`${profile.name} — ${profile.role}. My studies, personal journey, and life beyond the classroom.`} />
+    <meta name="theme-color" content="#1c1f24" />
+    <link rel="icon" type="image/svg+xml" href={`${base}/favicon.svg`} />
+    <title>{profile.name} — {profile.role}</title>
+  </head>
+  <body>
+    <AmbientBackground />
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="header wrap">
+      <a class="logo" href={`${base}/`} aria-label="Home"><span class="logo-mark">S</span><span class="brand-name">Alexande Surait<span aria-hidden="true">.</span></span></a>
+      <button class="menu-toggle" aria-controls="navigation" aria-expanded="false">Menu <span>☰</span></button>
+      <nav id="navigation" aria-label="Main navigation">
+        <a href={`${base}/`} aria-current="page">Home</a>
+        <a href="#about">About Me</a>
+        <a href="#gallery">Gallery</a>
+      </nav>
+    </header>
+    <main id="main">
+      <section class="hero wrap" id="home" aria-labelledby="hero-title">
+        <div class="hero-copy"><p class="eyebrow"><span class="status-dot"></span> A LIFE IN PROGRESS</p><h1 id="hero-title">Hey! I’m <span class="name-highlight">{profile.firstName}.</span><br/><span>Student,<br/>maker, rider.</span></h1><p class="description">{profile.intro}</p><div class="hero-actions"><a class="button" href="#journey">See what I’m about <span>↓</span></a><a class="quiet-link" href="#about">Meet Alexande <span>↓</span></a></div><div class="hero-caption"><span class="little-star">✳</span> Studying with intention. Living with momentum.</div></div>
+        <div class="profile-media">
+        <div class="hero-visual"><div class="line-orbit" aria-hidden="true"></div><div class="orb orb-one" aria-hidden="true"></div><div class="orb orb-two" aria-hidden="true"></div><div class="portrait-frame"><img src={`${base}/images/portrait.png`} width="600" height="750" alt="Alexande Surait in criminology uniform" fetchpriority="high" /><div class="portrait-shade"></div></div><div class="floating-label"><span>✦</span><div>Learn with purpose.<small>Grow with integrity.</small></div></div><span class="photo-note">PERSONAL PORTRAIT / 01</span></div>
+
+        </div>
+        <aside class="hero-sidebar" aria-label="Explore my profile">
+
+          <article><h2>About me</h2><p>{profile.about}</p><a href="#about">Get to know me →</a></article>
+          <article><h2>What keeps me moving</h2><p>Learning, making something useful, and taking the long way home.</p><a href="#journey">See the details →</a></article>
+          <article><h2>Beyond the classroom</h2><p>Making musubi. Enjoying motorcycle rides.</p><a href="#hobbies">Explore my interests &rarr;</a></article>
+        </aside>
+      </section>
+      <div class="skills-strip"><div class="wrap"><span>VALUES TO GROW BY</span><p>✳ Integrity</p><p>◇ Discipline</p><p>✧ Empathy</p><p>✺ Responsibility</p></div></div>
+      <section class="about wrap section" id="about" aria-labelledby="about-title"><div class="about-visual"><div class="about-photo"><img src={`${base}/images/portrait.png`} alt="Alexande Surait in criminology uniform" width="600" height="750" loading="lazy" /></div><div class="experience-badge"><span>Still</span><strong>becoming.</strong><span>ONE STEP AT A TIME ↗</span></div><div class="about-ring" aria-hidden="true"></div></div><div class="about-copy"><p class="eyebrow">A QUICK INTRODUCTION</p><h2 id="about-title">One person.<br/><span class="blue">Three strong interests.</span></h2><p>{profile.about}</p><p>{profile.aboutMore}</p><div class="about-facts"><div><strong>Study</strong><span>Criminology</span></div><div><strong>Create</strong><span>Musubi</span></div><div><strong>Reset</strong><span>Motorcycle rides</span></div></div><a class="button" href="#story">Read my story <span>↗</span></a></div></section>
+      <section class="journey-home section" id="journey" aria-labelledby="journey-title"><div class="wrap"><div class="section-heading"><div><p class="eyebrow">MY JOURNEY</p><h2 id="journey-title">Learning with <span class="blue">purpose.</span></h2></div><p>Questions become lessons.<br/>Lessons become direction.</p></div><div class="journey-cards"><article class="service-card"><div class="service-top"><span class="service-icon">01</span><span>START</span></div><h3>Curiosity</h3><p>I’m studying criminology and learning more about people, society, and the criminal justice system.</p></article><article class="service-card"><div class="service-top"><span class="service-icon">02</span><span>LEARN</span></div><h3>My musubi business</h3><p>Alongside my studies, I run a small musubi business. It’s another part of my everyday life, beyond the classroom.</p></article><article class="service-card"><div class="service-top"><span class="service-icon">03</span><span>PURPOSE</span></div><h3>Motorcycle rides</h3><p>I love riding motorcycles. A ride is one of my favorite ways to enjoy my time outside school and business.</p></article></div><div class="journey-note"><strong>What I’m carrying forward</strong><span>Discipline</span><span>Empathy</span><span>Critical thinking</span><span>Responsibility</span></div></div></section>
+      <PersonalSections />
+      <MediaGallery />
+    </main>
+    <footer class="wrap footer"><a class="logo" href="#home" aria-label="Back to home"><span class="logo-mark">S</span><span class="brand-name">Alexande Surait<span aria-hidden="true">.</span></span></a><p>© {new Date().getFullYear()} {profile.name}. All rights reserved.</p><a class="quiet-link" href="#home">Back to top ↑</a></footer>
+    <script>
+      const toggle = document.querySelector<HTMLButtonElement>('.menu-toggle');
+      const navigation = document.querySelector<HTMLElement>('#navigation');
+      const closeMenu = () => { toggle?.setAttribute('aria-expanded', 'false'); navigation?.classList.remove('open'); };
+      toggle?.addEventListener('click', () => { const open = toggle.getAttribute('aria-expanded') !== 'true'; toggle.setAttribute('aria-expanded', String(open)); navigation?.classList.toggle('open', open); });
+      navigation?.querySelectorAll('a').forEach(link => link.addEventListener('click', closeMenu));
+      document.addEventListener('keydown', event => { if (event.key === 'Escape' && toggle?.getAttribute('aria-expanded') === 'true') { closeMenu(); toggle.focus(); } });
+    </script>
+  </body>
+</html>

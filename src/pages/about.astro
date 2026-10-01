@@ -1,0 +1,81 @@
+---
+import '../../styles.css';
+import AmbientBackground from '../components/AmbientBackground.astro';
+import { profile } from '../data/portfolio';
+import PersonalSections from '../components/PersonalSections.astro';
+import '../styles/polish.css';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Get to know Alexande Surait: criminology student, small musubi business owner, and motorcycle enthusiast." />
+    <link rel="icon" href={`${base}/favicon.svg`} />
+    <title>About Me — {profile.name}</title>
+  </head>
+  <body>
+    <AmbientBackground />
+    <header class="header wrap">
+      <a class="logo" href={`${base}/`} aria-label="Home"><span class="logo-mark">S</span><span class="brand-name">Alexande Surait<span aria-hidden="true">.</span></span></a>
+      <nav id="navigation" aria-label="Main navigation">
+        <a href={`${base}/`}>Home</a>
+        <a href={`${base}/about/`} aria-current="page">About Me</a>
+      </nav>
+    </header>
+
+    <a class="skip-link" href="#main">Skip to content</a>
+    <main id="main" class="wrap personal-about" style="padding: 48px 0 72px;">
+      <section class="about" style="padding-top: 0;">
+        <div class="section-heading" style="margin-bottom: 28px;">
+          <div>
+            <p class="eyebrow">A little about me</p>
+            <h1>More than a profile.<br /><span class="blue">A story of my own.</span></h1>
+          </div>
+        </div>
+
+        <div class="about-content">
+          <div class="about-visual">
+            <div class="about-photo">
+              <img src={`${base}/images/portrait.png`} alt="Alexande Surait in criminology uniform" width="600" height="750" />
+            </div>
+            <div class="experience-badge">
+              <span>Always</span>
+              <strong>learning.</strong>
+              <span>observing people & systems ↗</span>
+            </div>
+            <div class="about-ring" aria-hidden="true"></div>
+          </div>
+
+          <div class="about-copy">
+            <p>{profile.about}</p>
+            <p>{profile.aboutMore}</p>
+            <div class="about-facts">
+              <div>
+                <strong>Study</strong>
+                <span>Criminology</span>
+              </div>
+              <div>
+                <strong>Business</strong>
+                <span>Musubi</span>
+              </div>
+              <div>
+                <strong>Enjoy</strong>
+                <span>Motorcycle rides</span>
+              </div>
+            </div>
+            <a class="button" href={`${base}/#journey`}>See my journey <span>↗</span></a>
+          </div>
+        </div>
+      </section>
+      <PersonalSections />
+    </main>
+
+    <footer class="wrap footer">
+      <p>© {new Date().getFullYear()} {profile.name}. All rights reserved.</p>
+      <a class="quiet-link" href={`${base}/`}>Back to top ↑</a>
+    </footer>
+  </body>
+</html>

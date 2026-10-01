@@ -1,0 +1,96 @@
+---
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const photos = [
+  { file: '19.jpg', title: 'Musubi ready to go', note: 'SMALL BUSINESS / 01' },
+  { file: '24.jpg', title: 'Preparing the filling', note: 'MUSUBI MAKING / 02' },
+  { file: 'surait1.jpg', title: 'A finished musubi', note: 'MUSUBI MAKING / 03' },
+  { file: '34.jpg', title: 'A rainy ride with friends', note: 'MOTORCYCLE LIFE / 04' },
+  { file: '36.jpg', title: 'The riding crew', note: 'MOTORCYCLE LIFE / 05' },
+  { file: '35.jpg', title: 'A day by the sea', note: 'WEEKEND STORIES / 06' },
+  { file: '14.jpg', title: 'Classmates and good company', note: 'PEOPLE / 07' },
+  { file: '27.png', title: 'Walking through the river', note: 'OUTDOOR DAYS / 08' },
+  { file: '28.jpg', title: 'Food, family, and home', note: 'PEOPLE / 09' },
+  { file: '18.jpg', title: 'Criminology training', note: 'STUDENT LIFE / 10' },
+  { file: '22.jpg', title: 'A small side project', note: 'CREATIVE WORK / 11' },
+  { file: '13.jpg', title: 'Exploring somewhere new', note: 'OUTDOOR DAYS / 12' },
+  { file: 'surait4.jpg', title: 'Musubi packed in a cooler bag', note: 'SMALL BUSINESS / 13' },
+  { file: '15.jpg', title: 'Rice, eggs, and sausages packed for a meal', note: 'FOOD / 14' },
+  { file: '17.jpg', title: 'A slice of pizza', note: 'FOOD / 15' },
+  { file: '20.png', title: 'Fish and hot dogs on an outdoor grill', note: 'OUTDOOR DAYS / 16' },
+  { file: '31.png', title: 'An unusual sauce holder at a picnic', note: 'CAMERA ROLL / 17' },
+  { file: '29.png', title: 'A bottle resting among river rocks', note: 'CAMERA ROLL / 18' },
+  { file: '11.jpg', title: 'Swimming in a natural pool', note: 'OUTDOOR DAYS / 19' },
+  { file: '23.jpg', title: 'A rocky trail with a four-legged companion', note: 'OUTDOOR DAYS / 20' },
+  { file: '21.jpg', title: 'A group photo over a school-day break', note: 'STUDENT LIFE / 21' },
+  { file: '25.jpg', title: 'Targets and equipment at a shooting range', note: 'CAMERA ROLL / 22' },
+  { file: '12.jpg', title: 'A colorful collection of caps', note: 'CAMERA ROLL / 23' },
+  { file: '16.jpg', title: 'A group selfie after dark', note: 'PEOPLE / 24' },
+  { file: '26.jpg', title: 'An evening group photo', note: 'PEOPLE / 25' },
+  { file: 'surait2.jpg', title: 'Everyone together at a beach shelter', note: 'PEOPLE / 26' },
+  { file: 'surait5.jpg', title: 'Sharing pizza around the table', note: 'PEOPLE / 27' },
+  { file: 'surait6.jpg', title: 'An evening photo with flowers', note: 'MEMORIES / 28' },
+  { file: 'surait7.jpg', title: 'A birthday celebration together', note: 'CELEBRATIONS / 29' },
+  { file: 'surait8.jpg', title: 'A get-together at home', note: 'PEOPLE / 30' },
+  { file: 'surait9.jpg', title: 'A night out around the table', note: 'PEOPLE / 31' },
+];
+---
+<section class="media-gallery section" id="gallery" aria-labelledby="gallery-title">
+  <div class="wrap">
+    <div class="section-heading"><div><p class="eyebrow">MY CAMERA ROLL</p><h2 id="gallery-title">The moments<br/><span class="blue">I keep.</span></h2></div><p>Food, people, roads, and places.<br/>A more honest look at life outside the profile.</p></div>
+    <div class="gallery-grid">
+      {photos.slice(0, 6).map((photo, index) => <figure class="gallery-card"><button class="photo-open" data-photo-index={index} aria-label={`Explore photo: ${photo.title}`}><img src={`${base}/media/${photo.file}`} alt={photo.title} loading="lazy" /></button><figcaption><span>{photo.note}</span><strong>{photo.title}</strong></figcaption></figure>)}
+    </div>
+    <details class="more-photos">
+      <summary>Show all photos <span>25 more memories</span></summary>
+      <div class="gallery-grid">{photos.slice(6).map((photo, index) => <figure class="gallery-card"><button class="photo-open" data-photo-index={index + 6} aria-label={`Explore photo: ${photo.title}`}><img src={`${base}/media/${photo.file}`} alt={photo.title} loading="lazy" /></button><figcaption><span>{photo.note}</span><strong>{photo.title}</strong></figcaption></figure>)}</div>
+    </details>
+    <div class="video-row"><article><video controls muted playsinline preload="metadata" aria-label="A memory in motion" poster={`${base}/media/36.jpg`}><source src={`${base}/media/1613.mp4`} type="video/mp4" /></video><p class="eyebrow">MEMORIES / VIDEO 01</p><h3>A memory in motion.</h3></article><article><video controls preload="metadata" poster={`${base}/media/34.jpg`}><source src={`${base}/media/33.mp4`} type="video/mp4" /></video><p class="eyebrow">RIDE LOG / VIDEO 02</p><h3>Rain, roads, and a full crew.</h3></article></div>
+  </div>
+</section>
+<dialog class="photo-viewer" aria-labelledby="viewer-caption">
+  <div class="photo-viewer-inner">
+    <button class="viewer-close" aria-label="Close photo viewer" autofocus>Close ×</button>
+    <img class="viewer-image" alt="" />
+    <div class="viewer-toolbar">
+      <button class="viewer-previous" aria-label="Previous photo">← Previous</button>
+      <div aria-live="polite"><p id="viewer-caption"></p><span class="viewer-count"></span></div>
+      <button class="viewer-next" aria-label="Next photo">Next →</button>
+    </div>
+  </div>
+</dialog>
+<script>
+  const viewer = document.querySelector<HTMLDialogElement>('.photo-viewer');
+  const image = viewer?.querySelector<HTMLImageElement>('.viewer-image');
+  const caption = viewer?.querySelector<HTMLElement>('#viewer-caption');
+  const count = viewer?.querySelector<HTMLElement>('.viewer-count');
+  const triggers = Array.from(document.querySelectorAll<HTMLButtonElement>('.photo-open'));
+  let current = 0;
+  let previousOverflow = '';
+  const showPhoto = (index: number) => {
+    current = (index + triggers.length) % triggers.length;
+    const thumbnail = triggers[current]?.querySelector('img');
+    if (!image || !thumbnail) return;
+    image.src = thumbnail.src;
+    image.alt = thumbnail.alt;
+    if (caption) caption.textContent = thumbnail.alt;
+    if (count) count.textContent = `${current + 1} / ${triggers.length}`;
+  };
+  triggers.forEach(trigger => trigger.addEventListener('click', () => {
+    if (!viewer) return;
+    showPhoto(Number(trigger.dataset.photoIndex));
+    previousOverflow = document.body.style.overflow;
+    viewer.showModal();
+    document.body.style.overflow = 'hidden';
+  }));
+  viewer?.querySelector('.viewer-close')?.addEventListener('click', () => viewer.close());
+  viewer?.querySelector('.viewer-previous')?.addEventListener('click', () => showPhoto(current - 1));
+  viewer?.querySelector('.viewer-next')?.addEventListener('click', () => showPhoto(current + 1));
+  viewer?.addEventListener('close', () => { document.body.style.overflow = previousOverflow; });
+  viewer?.addEventListener('click', event => { if (event.target === viewer) viewer.close(); });
+  viewer?.addEventListener('keydown', event => {
+    if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+      event.preventDefault();
+      showPhoto(current + (event.key === 'ArrowLeft' ? -1 : 1));
+    }
+  });
+</script>
